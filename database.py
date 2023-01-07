@@ -21,7 +21,7 @@ class Database:
         con.close()
 
     def reset_readings_table(self):
-        con = sqliite3.connect(self.db_name)
+        con = sqlite3.connect(self.db_name)
         cur = con.cursor()
 
         cur.execute("DROP TABLE READING")
