@@ -1,3 +1,6 @@
 {
-    "humidity_capture_interval_minutes": 10
+    "humidity_capture_interval_seconds": 10,
+    "database_name": "readings.db",
+    "webserver_hostname": "localhost",
+    "webserver_port": 8080
 }

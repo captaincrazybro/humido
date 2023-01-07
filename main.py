@@ -1,11 +1,14 @@
 import json
-from sense_hat_display import sense_hat_display_module
-from humidity_reader import humidty_reader_module
+from website import start_webserver
+from database import Database
+from humidity_reader import start_humidty_reader
 
 config_file_name = "config.json"
 config_file = open("config.json")
 config = json.load(config_file)
+config_file.close()
 
+db = Database(config)
 
-humidty_reader_module(config)
-sense_hat_display_module(config)
+start_humidty_reader(config, db)
+start_webserver(config, db)

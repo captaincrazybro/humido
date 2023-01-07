@@ -1,8 +1,8 @@
 import time
 
-def humidty_reader_module(config):
+def start_humidty_reader(config, db):
     print("Starting humidty reader module...")
-    interval = config["humidity_capture_interval_minutes"] * 60 
+    interval = config["humidity_capture_interval_seconds"] * 60 
 
     while True:
         # TODO: Add humidity reader
