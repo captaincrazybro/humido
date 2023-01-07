@@ -16,7 +16,6 @@ def start_humidity_reader(config, db: Database):
         print(f'Temp is {temp}')
         print(f'Humidty is {humidity}')
         db.insert_reading(1, temp, humidity)
-        db.print_readings_table()
         time.sleep(interval)
 
 def read_temp():

@@ -1,5 +1,4 @@
 import json
-from website import start_webserver
 from database import Database
 from humidity_reader import start_humidity_reader
 
@@ -11,4 +10,3 @@ config_file.close()
 db = Database(config)
 
 start_humidity_reader(config, db)
-start_webserver(config, db)
