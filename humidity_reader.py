@@ -1,12 +1,30 @@
 import time
+from math import sin, pi
 
-def start_humidty_reader(config, db):
-    print("Starting humidty reader module...")
-    interval = config["humidity_capture_interval_seconds"] * 60 
+from datetime import datetime
+from database import Database
+
+def start_humidty_reader(config, db: Database):
+    print("Starting humidity reader module...")
+    interval = config["humidity_capture_interval_seconds"]
 
     while True:
         # TODO: Add humidity reader
-        humidty = 30
+        temp = read_temp()
+        humidity = read_humidity()
 
-        print(f'Humidty is {humidty}')
+        print(f'Temp is {temp}')
+        print(f'Humidty is {humidity}')
         time.sleep(interval)
+
+def read_temp():
+    date = datetime.now()
+    seconds = date.hour * 3600 + date.minute * 60 + date.second
+    temp = 2.5 * sin(2 * pi / 24 / 60 / 60 * seconds + pi) + 52.5
+    return temp
+
+def read_humidity():
+    date = datetime.now()
+    seconds = date.hour * 3600 + date.minute * 60 + date.second
+    humidity = .075 * sin(2 * pi / 24 / 60 / 60 * seconds) + 75.5
+    return humidity
