@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <style>
+            body {
+                margin: 0;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
+                Cantarell, 'Helvetica Neue', sans-serif !important;
+            }
+
+            .page {
+                text-align: center;
+            }
+
+            .header {
+                width: 100%;
+                background-color: black;
+                color: white;
+                padding: 4px;
+            }
+
+            .header p {
+                margin: 0;
+            }
+        </style>
+
+        <div class="header">
+            <p>Welcome to Humido!</p>
+        </div>
+        <div class="page">
+            <h1>Current Readings</h1>
+            <p>Temperature: <b>{{inst_temp}} &#8457;</b> - Humidity: <b>{{inst_humidity}}</b></p>
+            <h1>Past 10 Days</h1>
+            
+        </div>
+    </body>
+</html> 
