@@ -48,3 +48,12 @@ class Database:
         print(res.fetchall())
 
         con.close()
+
+    def get_readings(self, page):
+        con = sqlite3.connect(self.db_name)
+        cur = con.cursor()
+
+        raw_readings = cur.execute("SELECT * FROM READING WHERE julianday('now') - julianday(READ_DATE) BETWEEN ? AND ?", ((page - 1) * 10, page * 10 - 1))
+        readings = raw_readings.fetchall()
+        con.close()
+        return readings

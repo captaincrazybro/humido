@@ -1,6 +1,8 @@
 <html>
     <head>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
     </head>
     <body>
         <style>
@@ -15,7 +17,6 @@
             }
 
             .header {
-                width: 100%;
                 background-color: black;
                 color: white;
                 padding: 4px;
@@ -23,6 +24,21 @@
 
             .header p {
                 margin: 0;
+            }
+
+            .pages-table {
+                table-layout: fixed;
+                width: 100%;
+                height: 100%;
+                border-spacing: 0;  
+            }
+
+            .next-page-container {
+
+            }
+
+            .last_page-container {
+
             }
         </style>
 
@@ -33,7 +49,53 @@
             <h1>Current Readings</h1>
             <p>Temperature: <b>{{inst_temp}} &#8457;</b> - Humidity: <b>{{inst_humidity}}</b></p>
             <h1>Past 10 Days</h1>
-            
+            <div>
+                <canvas id="graph-10-day" width="100" height="35"></canvas>
+            </div>
+            <table class="pages-table">
+                <tr>
+                    <td>
+                        <div class="next-page-container">
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="last-page-container">
+
+                        </div>
+                    </td>
+                </tr>
+            </table> 
+
+            <script>
+                const ctx = document.getElementById("graph-10-day")
+                let chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: "Temperature",
+                            data: [{% for reading in readings %}{"value": {{ reading[3] }}, "date": "{{ reading[4] }}"},{% endfor %}]
+                        },{
+                            label: "Humidity",
+                            data: [{% for reading in readings %}{"value": {{ reading[2] }}, "date": "{{ reading[4] }}"},{% endfor %}]
+                        }],
+                    },
+                    options: {
+                        parsing: {
+                            xAxisKey: 'date',
+                            yAxisKey: 'value'
+                        },
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'day'
+                                }
+                            }
+                        }
+                    }
+                });
+            </script>
         </div>
     </body>
 </html> 
