@@ -57,3 +57,14 @@ class Database:
         readings = raw_readings.fetchall()
         con.close()
         return readings
+
+    def insert_dummy_data(self):
+        con = sqlite3.connect(self.db_name)
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO READING (READ_SENSOR_NUM, READ_TEMP, READ_HUMIDITY, READ_DATE) VALUES (?, ?, ?, ?)", (1, 53, 75, "2022-12-31 11:19:00"))
+        cur.execute("INSERT INTO READING (READ_SENSOR_NUM, READ_TEMP, READ_HUMIDITY, READ_DATE) VALUES (?, ?, ?, ?)", (1, 54, 75, "2022-12-31 11:20:00"))
+        cur.execute("INSERT INTO READING (READ_SENSOR_NUM, READ_TEMP, READ_HUMIDITY, READ_DATE) VALUES (?, ?, ?, ?)", (1, 55, 75, "2022-12-31 11:21:00"))
+        con.commit()
+
+        con.close()

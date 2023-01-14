@@ -29,16 +29,15 @@
             .pages-table {
                 table-layout: fixed;
                 width: 100%;
-                height: 100%;
                 border-spacing: 0;  
             }
 
             .next-page-container {
-
+                text-align: right;
             }
 
             .last_page-container {
-
+                text-align: left;
             }
         </style>
 
@@ -48,20 +47,24 @@
         <div class="page">
             <h1>Current Readings</h1>
             <p>Temperature: <b>{{inst_temp}} &#8457;</b> - Humidity: <b>{{inst_humidity}}</b></p>
-            <h1>Past 10 Days</h1>
+            <h1>Readings for {{ start_date }} to {{ end_date }}</h1>
             <div>
                 <canvas id="graph-10-day" width="100" height="35"></canvas>
             </div>
             <table class="pages-table">
                 <tr>
                     <td>
-                        <div class="next-page-container">
-
+                        <div class="last-page-container">
+                            {% if page > 1 %}
+                                <a href="/?page={{ page - 1 }}">Last Page</a>
+                            {% endif %}
                         </div>
                     </td>
                     <td>
-                        <div class="last-page-container">
-
+                        <div class="next-page-container">
+                            {% if next_page_exists %}
+                                <a href="/?page={{ page + 1 }}" >Next Page</a>
+                            {% endif %}
                         </div>
                     </td>
                 </tr>

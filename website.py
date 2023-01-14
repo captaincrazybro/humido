@@ -1,10 +1,10 @@
 import json
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from humidity_reader import read_humidity, read_temp
+from datetime import date, datetime, timedelta
 from database import Database
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
-
 
 config_file_name = "config.json"
 config_file = open("config.json")
@@ -29,12 +29,15 @@ class Website(BaseHTTPRequestHandler):
             page = int(params["page"][0])
 
         readings = db.get_readings(page)
-        next_page_exists = len(db.get_readings(page + 1)) is not 0
+        next_page = db.get_readings(page + 1)
+        next_page_exists = len(next_page) != 0
+        end_date_range = date.today() - timedelta(days=((page - 1)*10))
+        start_date_range = date.today() - timedelta(days=(page*10 - 1))
 
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        self.wfile.write(bytes(template.render(inst_temp=read_temp(), inst_humidity=read_humidity(), readings=readings, page=page, next_page_exists=next_page_exists), "utf-8"))
+        self.wfile.write(bytes(template.render(inst_temp=read_temp(), inst_humidity=read_humidity(), readings=readings, page=page, next_page_exists=next_page_exists, start_date=str(start_date_range), end_date=str(end_date_range)), "utf-8"))
 
 print("Starting webserver...")
 website = HTTPServer((config["webserver_hostname"], config["webserver_port"]), Website)
